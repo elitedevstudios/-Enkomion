@@ -1,0 +1,194 @@
+{% schema %}
+{
+  "name": "veterinarian Section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "card_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "card_subtitle",
+      "label": "Subtitle",
+      "default": "This is a subtitle"
+    },
+    {
+      "type": "text",
+      "id": "card_title",
+      "label": "Title",
+      "default": "This is a title"
+    },
+    {
+      "type": "textarea",
+      "id": "card_paragraph",
+      "label": "Paragraph",
+      "default": "This is a paragraph."
+    },
+    {
+      "type": "url",
+      "id": "card_button_url",
+      "label": "Button URL",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "card_button_text",
+      "label": "Button Text",
+      "default": "Click Here"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_image",
+      "label": "Badge Image"
+    },
+    {
+      "type": "select",
+      "id": "badge_position",
+      "label": "Badge Position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "Top Left"
+        },
+        {
+          "value": "top-right",
+          "label": "Top Right"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bottom Left"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom Right"
+        }
+      ],
+      "default": "top-right"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customizable Card"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="customizable-card">
+  <div class="image-container">
+    {% if section.settings.card_image != blank %}
+      <img src="{{ section.settings.card_image | img_url: 'master' }}" alt="Card Image" class="card-image">
+    {% endif %}
+    {% if section.settings.badge_image != blank %}
+      <img src="{{ section.settings.badge_image | img_url: 'small' }}" alt="Badge Image" class="badge {{ section.settings.badge_position }}">
+    {% endif %}
+  </div>
+  <div class="card-content">
+    <h4>{{ section.settings.card_subtitle }}</h4>
+    <h2>{{ section.settings.card_title }}</h2>
+    <p>{{ section.settings.card_paragraph }}</p>
+    <a href="{{ section.settings.card_button_url }}" class="btn">{{ section.settings.card_button_text }}</a>
+  </div>
+</div>
+
+<style>
+.customizable-card {
+  text-align: center;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+}
+
+.badge {
+  position: absolute;
+}
+
+.badge.top-left {
+  top: 10px;
+  left: 10px;
+}
+
+.badge.top-right {
+  top: 10px;
+  right: 10px;
+}
+
+.badge.bottom-left {
+  bottom: 10px;
+  left: 10px;
+}
+
+.badge.bottom-right {
+  bottom: 10px;
+  right: 10px;
+}
+
+.card-content {
+  padding: 20px;
+}
+
+/* Updated button styles */
+.card-content .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px; /* Rounded corners */
+}
+
+.card-content .btn:hover {
+  background-color: #333;
+}
+
+/* Updated text styles */
+.card-content h4 {
+  color: orange; 
+}
+
+.card-content h2 {
+  font-weight: bolder; 
+  text-transform: capitalize; /* Capitalize, not all caps */
+}
+
+/* Mobile Styles */
+@media (max-width: 767px) {
+  .customizable-card img[style] {
+    height: auto; /* Adjust height for mobile */
+  }
+
+  .customizable-card {
+    flex-direction: column;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 768px) {
+  .customizable-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row; /* Change to row direction for desktop */
+  }
+
+  .image-container {
+    max-width: 50%;
+    margin-bottom: 0; /* Remove bottom margin for desktop */
+    position: relative; /* Ensure badge stays on image */
+  }
+
+  .card-content {
+    max-width: 50%;
+    text-align: left; /* Align text to the left */
+    padding-left: 20px; /* Add padding to the left side of text */
+  }
+}
+</style>
